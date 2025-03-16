@@ -8,7 +8,9 @@ class AudioPlayer:
         self.is_paused = False
         self.start_time = 0
         self.pause_time = 0
-        self.volume = 0.5  # Начальный уровень громкости (от 0.0 до 1.0)
+        self.volume = 0.5  # Initial volume level (from 0.0 to 1.0)
+        self.is_muted = False
+        self.previous_volume = self.volume
         pygame.mixer.music.set_volume(self.volume)
 
     def play(self, filepath):
@@ -58,9 +60,19 @@ class AudioPlayer:
         return "0:0.0"
 
     def volume_up(self):
-        self.volume = min(self.volume + 0.1, 1.0)  # Увеличение громкости на 0.1, максимум 1.0
+        self.volume = min(self.volume + 0.1, 1.0)  # Increase volume by 0.1, maximum 1.0
         pygame.mixer.music.set_volume(self.volume)
 
     def volume_down(self):
-        self.volume = max(self.volume - 0.1, 0.0)  # Уменьшение громкости на 0.1, минимум 0.0
+        self.volume = max(self.volume - 0.1, 0.0)  # Decrease volume by 0.1, minimum 0.0
+        pygame.mixer.music.set_volume(self.volume)
+
+    def mute(self):
+        if self.is_muted:
+            self.volume = self.previous_volume
+            self.is_muted = False
+        else:
+            self.previous_volume = self.volume
+            self.volume = 0.0
+            self.is_muted = True
         pygame.mixer.music.set_volume(self.volume)

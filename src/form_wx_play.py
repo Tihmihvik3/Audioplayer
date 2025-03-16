@@ -101,7 +101,7 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_CHAR_HOOK, self.on_key_press)
 
     def on_browse_folder(self, event):
-        with wx.DirDialog(self, "Select a folder", style=wx.DD_DEFAULT_STYLE) as dialog:
+        with wx.DirDialog(self, "Выбор папки", style=wx.DD_DEFAULT_STYLE) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 self.folder_path = dialog.GetPath()
                 self.label.SetLabel(f"Selected folder: {self.folder_path}")

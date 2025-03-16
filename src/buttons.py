@@ -30,4 +30,18 @@ def create_buttons(panel):
         "browse_button": wx.BitmapButton(panel, bitmap=browse_icon)
     }
 
+    # Set labels for buttons with shortcut keys
+    buttons["play_button"].SetLabel("Play (Space)")
+    buttons["pause_button"].SetLabel("Pause (Space)")
+    buttons["resume_button"].SetLabel("Resume (Space)")
+    buttons["stop_button"].SetLabel("Stop (Ctrl+Space)")
+    buttons["volume_up_button"].SetLabel("Volume Up (Ctrl+Up)")
+    buttons["volume_down_button"].SetLabel("Volume Down (Ctrl+Down)")
+    buttons["seek_forward_button"].SetLabel("Seek Forward (Ctrl+Right)")
+    buttons["seek_backward_button"].SetLabel("Seek Backward (Ctrl+Left)")
+    buttons["prev_track_button"].SetLabel("Previous Track (Page Up)")
+    buttons["next_track_button"].SetLabel("Next Track (Page Down)")
+    buttons["mute_button"].SetLabel("Mute (Esc)")
+    buttons["browse_button"].SetLabel("Browse (Ctrl+B)")
+
     return buttons
