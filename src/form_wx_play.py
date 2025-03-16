@@ -3,6 +3,7 @@ import wx
 import pygame
 from player import AudioPlayer
 from buttons import create_buttons
+from src.labels import STATIC_TEXT_LABEL
 
 class MyFrame(wx.Frame):
     """
@@ -80,9 +81,9 @@ class MyFrame(wx.Frame):
 
         self.label = wx.StaticText(
             panel,
-            label="Press the button to select a folder or play a file"
+            label=STATIC_TEXT_LABEL
         )
-        self.sizer.Add(self.label, 0, wx.ALL | wx.CENTER, 40)  # Place text 40 pixels below
+        self.sizer.Add(self.label, 0, wx.ALL | wx.CENTER, 5)
 
         self.listbox = wx.ListBox(panel)
         self.sizer.Add(self.listbox, 1, wx.ALL | wx.EXPAND, 10)
@@ -104,7 +105,7 @@ class MyFrame(wx.Frame):
         with wx.DirDialog(self, "Выбор папки", style=wx.DD_DEFAULT_STYLE) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 self.folder_path = dialog.GetPath()
-                self.label.SetLabel(f"Selected folder: {self.folder_path}")
+                self.label.SetLabel(f"Выбрана папка: {self.folder_path}")
                 self.listbox.Clear()
                 for file_name in os.listdir(self.folder_path):
                     if file_name.endswith(('.mp3', '.wav', '.ogg')):  # Audio file filter
@@ -234,7 +235,7 @@ def create_window():
     Function to create and run the main application window.
     """
     app = wx.App(False)
-    frame = MyFrame(None, title="TihonPlayer", size=(400, 400))
+    frame = MyFrame(None, title="TihonPlayer v1.0", size=(400, 400))
     frame.Show(True)
     frame.listbox.SetFocus()  # Focus on the listbox after the window starts
     app.MainLoop()
