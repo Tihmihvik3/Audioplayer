@@ -4,8 +4,11 @@ import wx
 import pygame
 from player import AudioPlayer
 from buttons import create_buttons
-from src.labels import STATIC_TEXT_LABEL
-from src.context_menu import show_context_menu
+from labels import START_TEXT_LABEL
+from context_menu import show_context_menu
+from settings import SettingsDialog
+from labels import DEFAULT_FOLDER_LABEL, CHOIS_FOLDER_LABEL
+
 
 class MyFrame(wx.Frame):
     def __init__(self, *args, **kw):
@@ -64,7 +67,7 @@ class MyFrame(wx.Frame):
         button_sizer2.Add(self.mute_button, 0, wx.ALL, 2)
         self.sizer.Add(button_sizer, 0, wx.ALL | wx.LEFT, 5)
         self.sizer.Add(button_sizer2, 0, wx.ALL | wx.LEFT, 5)
-        self.label = wx.StaticText(panel, label=STATIC_TEXT_LABEL)
+        self.label = wx.StaticText(panel, label=START_TEXT_LABEL)
         self.sizer.Add(self.label, 0, wx.ALL | wx.CENTER, 5)
         self.listbox = wx.ListBox(panel)
         self.sizer.Add(self.listbox, 1, wx.ALL | wx.EXPAND, 10)
@@ -74,9 +77,31 @@ class MyFrame(wx.Frame):
         self.folder_path = ""
         self.current_file = None
         self.Bind(wx.EVT_CHAR_HOOK, self.on_key_press)
+        self.load_default_folder()
+
+    def load_default_folder(self):
+        try:
+            with open("default_folder.txt", "r") as file:
+                self.folder_path = file.read().strip()
+                self.label.SetLabel(DEFAULT_FOLDER_LABEL + self.folder_path)
+                self.populate_listbox()
+        except FileNotFoundError:
+            pass
+
+    def populate_listbox(self):
+        self.listbox.Clear()
+        for file_name in os.listdir(self.folder_path):
+            if file_name.endswith(('.mp3', '.wav', '.ogg')):
+                self.listbox.Append(file_name)
+        if self.listbox.GetCount() > 0:
+            self.listbox.SetSelection(0)
+        self.play_button.Enable()
+        self.play_button.Show()
+        self.listbox.SetFocus()
+        self.Layout()
 
     def on_browse_folder(self, event):
-        with wx.DirDialog(self, "Выбор папки", style=wx.DD_DEFAULT_STYLE) as dialog:
+        with wx.DirDialog(self, CHOIS_FOLDER_LABEL, style=wx.DD_DEFAULT_STYLE) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 self.folder_path = dialog.GetPath()
                 self.label.SetLabel(f"Выбрана папка: {self.folder_path}")
@@ -203,8 +228,15 @@ class MyFrame(wx.Frame):
             self.on_mute(None)
         elif keycode == ord('M') and event.ControlDown():
             show_context_menu(self, self.listbox, self.folder_path)
+        elif keycode == ord('P') and event.ControlDown():
+            self.open_settings()
         else:
             event.Skip()
+
+    def open_settings(self):
+        settings_dialog = SettingsDialog(self)
+        settings_dialog.ShowModal()
+        settings_dialog.Destroy()
 
 def create_window():
     app = wx.App(False)
