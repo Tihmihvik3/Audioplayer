@@ -1,5 +1,5 @@
 import wx
-from src.labels import BUTTON_LABELS
+from labels import BUTTON_LABELS
 
 def create_buttons(panel):
     # Load icons for buttons

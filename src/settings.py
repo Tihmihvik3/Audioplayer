@@ -1,5 +1,3 @@
-from pydoc import browse
-
 import wx
 from labels import DEFAULT_FOLDER_LABEL
 from labels import CHOIS_FOLDER_LABEL
@@ -10,7 +8,7 @@ from labels import SAVE_BUTTON
 
 class SettingsDialog(wx.Dialog):
     def __init__(self, parent):
-        super().__init__(parent, title="Settings", size=(300, 200))
+        super().__init__(parent, title="Настройки", size=(300, 200))
         self.panel = wx.Panel(self)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
 
