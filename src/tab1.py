@@ -6,6 +6,7 @@ from labels import CHOIS_FOLDER_LABEL
 from player import AudioPlayer
 from settings import SettingsDialog
 from context_menu import ShowContextMenu
+from on_key_press import OnKeyPress  # Import the new OnKeyPress class
 
 class Tab1(wx.Panel):
     def __init__(self, parent):
@@ -13,6 +14,8 @@ class Tab1(wx.Panel):
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.player = AudioPlayer()
 
+        # Initialize OnKeyPress class
+        self.on_key_press = OnKeyPress(self)
 
         # Create a horizontal BoxSizer for the buttons
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -102,7 +105,7 @@ class Tab1(wx.Panel):
         self.listbox.Bind(wx.EVT_LISTBOX, self.on_listbox_selection)
 
         # Bind key press event
-        self.Bind(wx.EVT_CHAR_HOOK, self.on_key_press)
+        self.Bind(wx.EVT_CHAR_HOOK, self.on_key_press.on_key_press)  # Update binding
 
         # Load default folder and populate listbox
         self.load_default_folder()
@@ -224,67 +227,6 @@ class Tab1(wx.Panel):
         self.resume_button.Enable(enable)
         self.mute_button.Enable(enable)
 
-    def on_key_press(self, event):
-        keycode = event.GetKeyCode()
-        notebook = self.GetParent()  # Get the notebook directly
-        if keycode == wx.WXK_UP or keycode == wx.WXK_DOWN:
-            if not self.listbox.HasFocus():
-                self.listbox.SetFocus()
-                return
-        if keycode == wx.WXK_SPACE and event.ControlDown():
-            if self.stop_button.IsEnabled():
-                self.on_stop(None)
-        elif keycode == wx.WXK_SPACE:
-            if self.play_button.IsShown():
-                self.on_play(None)
-            elif self.pause_button.IsShown():
-                self.on_pause(None)
-            elif self.resume_button.IsShown():
-                self.on_resume(None)
-        elif keycode == wx.WXK_RIGHT and event.ControlDown():
-            self.on_seek_forward(None, seconds=10)
-        elif keycode == wx.WXK_LEFT and event.ControlDown():
-            self.on_seek_backward(None, seconds=-10)
-        elif keycode == wx.WXK_RIGHT and event.AltDown():
-            self.on_seek_forward(None, seconds=30)
-        elif keycode == wx.WXK_LEFT and event.AltDown():
-            self.on_seek_backward(None, seconds=-30)
-        elif keycode == wx.WXK_LEFT:
-            self.on_seek_backward(None)
-        elif keycode == wx.WXK_RIGHT:
-            self.on_seek_forward(None)
-        elif keycode == wx.WXK_UP and event.ControlDown():
-            self.on_volume_up(None)
-        elif keycode == wx.WXK_DOWN and event.ControlDown():
-            self.on_volume_down(None)
-        elif keycode == wx.WXK_PAGEUP:
-            self.on_prev_track(None)
-        elif keycode == wx.WXK_PAGEDOWN:
-            self.on_next_track(None)
-        elif keycode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
-            self.on_play(None)
-        elif keycode == ord('B'):
-            self.on_browse_folder(None)
-        elif keycode == ord('P'):
-            settings_dialog = SettingsDialog(self)
-            settings_dialog.ShowModal()
-            settings_dialog.Destroy()
-        elif keycode == wx.WXK_ESCAPE:
-            self.on_mute(None)
-        elif keycode == ord('M'):
-            context_menu = ShowContextMenu(self, self.listbox, self.folder_path)
-            context_menu.show()
-        elif keycode == ord('1'):
-            notebook.SetSelection(0)
-        elif keycode == ord('2'):
-            notebook.SetSelection(1)
-        elif keycode == ord('3'):
-            notebook.SetSelection(2)
-        elif keycode == wx.WXK_F1:
-            self.on_show_info(None)
-        else:
-            event.Skip()
-
     def on_show_info(self, event):
         notebook = self.GetParent()
         active_tab_index = notebook.GetSelection()
@@ -299,4 +241,12 @@ class Tab1(wx.Panel):
         self.active_tab_label.SetLabel(f"Активна вкладка: {active_tab_label}")
         message = f"Активна вкладка: {active_tab_label}\nОткрыта папка: {self.folder_path}"
         wx.adv.NotificationMessage("Информация:", message).Show(timeout=wx.adv.NotificationMessage.Timeout_Auto)
+
+    def on_play_sample(self, event, file_name_sample):
+        sample_file = os.path.join("sample", file_name_sample)
+        if os.path.exists(sample_file):
+            print(f"Playing sample file: {sample_file}")  # Debug print
+            self.player.on_play_sample(sample_file)
+        else:
+            wx.MessageBox("Sample file not found!", "Error", wx.OK | wx.ICON_ERROR)
 

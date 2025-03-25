@@ -76,3 +76,12 @@ class AudioPlayer:
             self.volume = 0.0
             self.is_muted = True
         pygame.mixer.music.set_volume(self.volume)
+
+    def on_play_sample(self, filepath_sample):
+        if self.is_playing:
+            self.stop()
+        pygame.mixer.music.load(filepath_sample)
+        pygame.mixer.music.play(loops=-1)  # Loop the sample playback indefinitely
+        self.is_playing = True
+        self.is_paused = False
+        self.start_time = time.time()
