@@ -24,6 +24,9 @@ SAVE_BUTTON = 'Сохранить'
 
 # Метки контекстного меню
 COPY_LABEL = "Копировать"
-CUT_LABEL = "Вырезать"
+RENAME_LABEL   = "Переименовать"
 PASTE_LABEL = "Вставить"
 DELETE_LABEL = "Удалить"
+NEW_NAME = "Введите новое имя файла"
+CONFIRM_DELETE = "Подтверждение удаления"
+DELETE_FILE = "Продолжить удаление файла"

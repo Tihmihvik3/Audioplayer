@@ -73,5 +73,19 @@ class OnKeyPress:
             self.tab.on_play_sample(None, "02.mp3")
         elif keycode == ord('E') and event.ShiftDown():
             self.tab.on_play_sample(None, "03.mp3")
+        elif keycode == wx.WXK_DELETE:
+            context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
+            context_menu.on_delete(None)
+        elif keycode == ord('C') and event.ControlDown():
+            context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
+            context_menu.on_copy(None)
+        elif keycode == ord('V') and event.ControlDown():
+            context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
+            context_menu.on_paste(None)
+        elif keycode == wx.WXK_F2:
+            context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
+            context_menu.on_rename(None)
+        elif keycode == wx.WXK_F5:
+            self.tab.on_refresh_listbox(None)
         else:
             event.Skip()

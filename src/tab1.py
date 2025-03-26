@@ -91,15 +91,18 @@ class Tab1(wx.Panel):
         # Define the accelerator table for keyboard shortcuts
         browse_id = wx.NewIdRef()
         show_info_id = wx.NewIdRef()
+        refresh_listbox_id = wx.NewIdRef()  # Add ID for refresh listbox
         accel_tbl = wx.AcceleratorTable([
             (wx.ACCEL_CTRL, ord('B'), browse_id),  # Ctrl+B for Browse
-            (wx.ACCEL_NORMAL, wx.WXK_F1, show_info_id)  # F1 for showing info
+            (wx.ACCEL_NORMAL, wx.WXK_F1, show_info_id),  # F1 for showing info
+            (wx.ACCEL_NORMAL, wx.WXK_F5, refresh_listbox_id)  # F5 for refreshing listbox
         ])
         self.SetAcceleratorTable(accel_tbl)
 
         # Bind the accelerator table event to the on_browse_folder method
         self.Bind(wx.EVT_MENU, self.on_browse_folder, id=browse_id)
         self.Bind(wx.EVT_MENU, self.on_show_info, id=show_info_id)
+        self.Bind(wx.EVT_MENU, self.on_refresh_listbox, id=refresh_listbox_id)  # Bind refresh listbox event
 
         # Bind listbox selection event
         self.listbox.Bind(wx.EVT_LISTBOX, self.on_listbox_selection)
@@ -250,3 +253,5 @@ class Tab1(wx.Panel):
         else:
             wx.MessageBox("Sample file not found!", "Error", wx.OK | wx.ICON_ERROR)
 
+    def on_refresh_listbox(self, event):
+        self.populate_listbox()
