@@ -7,6 +7,7 @@ from player import AudioPlayer
 from settings import SettingsDialog
 from context_menu import ShowContextMenu
 from on_key_press import OnKeyPress  # Import the new OnKeyPress class
+all_play = True
 
 class Tab1(wx.Panel):
     def __init__(self, parent):

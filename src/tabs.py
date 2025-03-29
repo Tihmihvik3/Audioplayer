@@ -15,6 +15,6 @@ class Tabs(wx.Notebook):
         self.tab3 = Tab3(self)
 
         # Add tabs to the notebook
-        self.AddPage(self.tab1, "Tab 1")
-        self.AddPage(self.tab2, "Tab 2")
-        self.AddPage(self.tab3, "Tab 3")
+        self.AddPage(self.tab1, "Плеер 1")
+        self.AddPage(self.tab2, "Плеер 2")
+        self.AddPage(self.tab3, "Плеер 3")

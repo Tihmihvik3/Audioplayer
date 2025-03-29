@@ -12,12 +12,18 @@ class AudioPlayer:
         self.is_muted = False
         self.previous_volume = self.volume
         pygame.mixer.music.set_volume(self.volume)
+        self.on_end_callback = None
 
-    def play(self, filepath):
+    def set_on_end_callback(self, callback):
+        self.on_end_callback = callback
+
+    def play(self, filepath, on_end_callback=None):
         if self.is_playing:
-            self.stop()
+            self.stop(attenuation=True)
         pygame.mixer.music.load(filepath)
         pygame.mixer.music.play()
+        if on_end_callback:
+            self.set_on_end_callback(on_end_callback)
         self.is_playing = True
         self.is_paused = False
         self.start_time = time.time()
@@ -32,11 +38,16 @@ class AudioPlayer:
             self.is_paused = False
             self.start_time += time.time() - self.pause_time
 
-    def stop(self):
+    def stop(self, attenuation=False):
         if self.is_playing:
+            if attenuation == True:
+                pygame.mixer.music.fadeout(2000)  # Fade out over 2 seconds
+                time.sleep(2)  # Wait for the fadeout to complete
             pygame.mixer.music.stop()
             self.is_playing = False
             self.is_paused = False
+            if self.on_end_callback:
+                self.on_end_callback()
 
     def seek(self, seconds):
         if self.is_playing:
