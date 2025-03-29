@@ -1,7 +1,6 @@
 # context_menu.py
 import wx
 import os
-import pyperclip  # Add this import for clipboard operations
 from labels import COPY_LABEL, PASTE_LABEL, DELETE_LABEL, RENAME_LABEL, NEW_NAME, CONFIRM_DELETE, DELETE_FILE
 
 clipboard = None
@@ -93,3 +92,4 @@ class ShowContextMenu:
             self.refresh_listbox()
         else:
             event.Skip()
+

@@ -90,9 +90,9 @@ class Tab1(wx.Panel):
         self.current_file = None
 
         # Define the accelerator table for keyboard shortcuts
-        browse_id = wx.NewIdRef()
-        show_info_id = wx.NewIdRef()
-        refresh_listbox_id = wx.NewIdRef()  # Add ID for refresh listbox
+        browse_id = wx.NewId()
+        show_info_id = wx.NewId()
+        refresh_listbox_id = wx.NewId()  # Add ID for refresh listbox
         accel_tbl = wx.AcceleratorTable([
             (wx.ACCEL_CTRL, ord('B'), browse_id),  # Ctrl+B for Browse
             (wx.ACCEL_NORMAL, wx.WXK_F1, show_info_id),  # F1 for showing info
@@ -256,3 +256,4 @@ class Tab1(wx.Panel):
 
     def on_refresh_listbox(self, event):
         self.populate_listbox()
+

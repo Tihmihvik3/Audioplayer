@@ -96,3 +96,4 @@ class AudioPlayer:
         self.is_playing = True
         self.is_paused = False
         self.start_time = time.time()
+

@@ -24,6 +24,12 @@ class OnKeyPress:
                 self.tab.on_pause(None)
             elif self.tab.resume_button.IsShown():
                 self.tab.on_resume(None)
+        elif keycode == ord('P') and event.ShiftDown():
+            self.tab.on_play_sample(None, "10.mp3")
+        elif keycode == ord('B') and event.ShiftDown():
+            self.tab.on_play_sample(None, "24.mp3")
+        elif keycode == ord('M') and event.ShiftDown():
+            self.tab.on_play_sample(None, "26.mp3")
         elif keycode == wx.WXK_RIGHT and event.ControlDown():
             self.tab.on_seek_forward(None, seconds=10)
         elif keycode == wx.WXK_LEFT and event.ControlDown():
@@ -65,14 +71,6 @@ class OnKeyPress:
             notebook.SetSelection(2)
         elif keycode == wx.WXK_F1:
             self.tab.on_show_info(None)
-
-        # Запуск семплов.
-        elif keycode == ord('Q') and event.ShiftDown():
-            self.tab.on_play_sample(None, "01.mp3")
-        elif keycode == ord('W') and event.ShiftDown():
-            self.tab.on_play_sample(None, "02.mp3")
-        elif keycode == ord('E') and event.ShiftDown():
-            self.tab.on_play_sample(None, "03.mp3")
         elif keycode == wx.WXK_DELETE:
             context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
             context_menu.on_delete(None)
@@ -87,5 +85,56 @@ class OnKeyPress:
             context_menu.on_rename(None)
         elif keycode == wx.WXK_F5:
             self.tab.on_refresh_listbox(None)
+
+        # Запуск семплов.
+        elif keycode == ord('Q') and event.ShiftDown():
+            self.tab.on_play_sample(None, "01.mp3")
+        elif keycode == ord('W') and event.ShiftDown():
+            self.tab.on_play_sample(None, "02.mp3")
+        elif keycode == ord('E') and event.ShiftDown():
+            self.tab.on_play_sample(None, "03.mp3")
+        elif keycode == ord('R') and event.ShiftDown():
+            self.tab.on_play_sample(None, "04.mp3")
+        elif keycode == ord('T') and event.ShiftDown():
+            self.tab.on_play_sample(None, "05.mp3")
+        elif keycode == ord('Y') and event.ShiftDown():
+            self.tab.on_play_sample(None, "06.mp3")
+        elif keycode == ord('U') and event.ShiftDown():
+            self.tab.on_play_sample(None, "07.mp3")
+        elif keycode == ord('I') and event.ShiftDown():
+            self.tab.on_play_sample(None, "08.mp3")
+        elif keycode == ord('O') and event.ShiftDown():
+            self.tab.on_play_sample(None, "09.mp3")
+        elif keycode == ord('A') and event.ShiftDown():
+            self.tab.on_play_sample(None, "11.mp3")
+        elif keycode == ord('S') and event.ShiftDown():
+            self.tab.on_play_sample(None, "12.mp3")
+        elif keycode == ord('D') and event.ShiftDown():
+            self.tab.on_play_sample(None, "13.mp3")
+        elif keycode == ord('F') and event.ShiftDown():
+            self.tab.on_play_sample(None, "14.mp3")
+        elif keycode == ord('G') and event.ShiftDown():
+            self.tab.on_play_sample(None, "15.mp3")
+        elif keycode == ord('H') and event.ShiftDown():
+            self.tab.on_play_sample(None, "16.mp3")
+        elif keycode == ord('J') and event.ShiftDown():
+            self.tab.on_play_sample(None, "17.mp3")
+        elif keycode == ord('K') and event.ShiftDown():
+            self.tab.on_play_sample(None, "18.mp3")
+        elif keycode == ord('L') and event.ShiftDown():
+            self.tab.on_play_sample(None, "19.mp3")
+        elif keycode == ord('Z') and event.ShiftDown():
+            self.tab.on_play_sample(None, "20.mp3")
+        elif keycode == ord('X') and event.ShiftDown():
+            self.tab.on_play_sample(None, "21.mp3")
+        elif keycode == ord('C') and event.ShiftDown():
+            self.tab.on_play_sample(None, "22.mp3")
+        elif keycode == ord('V') and event.ShiftDown():
+            self.tab.on_play_sample(None, "23.mp3")
+        elif keycode == ord('N') and event.ShiftDown():
+            self.tab.on_play_sample(None, "25.mp3")
+        elif keycode == ord('M') and event.ShiftDown():
+            self.tab.on_play_sample(None, "26.mp3")
+
         else:
             event.Skip()
