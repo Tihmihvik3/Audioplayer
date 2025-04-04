@@ -52,15 +52,13 @@ class OnKeyPress:
             self.tab.on_next_track(None)
         elif keycode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
             self.tab.on_play(None)
-        elif keycode == ord('B'):
-            self.tab.on_browse_folder(None)
-        elif keycode == ord('P'):
+        elif keycode == ord('P') and event.ControlDown():
             settings_dialog = SettingsDialog(self.tab)
             settings_dialog.ShowModal()
             settings_dialog.Destroy()
         elif keycode == wx.WXK_ESCAPE:
             self.tab.on_mute(None)
-        elif keycode == ord('M'):
+        elif keycode == ord('M') and event.ControlDown():
             context_menu = ShowContextMenu(self.tab, self.tab.listbox, self.tab.folder_path)
             context_menu.show()
         elif keycode == ord('1'):

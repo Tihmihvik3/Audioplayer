@@ -40,7 +40,7 @@ class AudioPlayer:
 
     def stop(self, attenuation=False):
         if self.is_playing:
-            if attenuation == True:
+            if attenuation:
                 pygame.mixer.music.fadeout(2000)  # Fade out over 2 seconds
                 time.sleep(2)  # Wait for the fadeout to complete
             pygame.mixer.music.stop()
@@ -96,4 +96,3 @@ class AudioPlayer:
         self.is_playing = True
         self.is_paused = False
         self.start_time = time.time()
-
