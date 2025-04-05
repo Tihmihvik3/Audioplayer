@@ -183,9 +183,12 @@ class Tab1(wx.Panel):
 
     def on_next_track(self, event):
         selection = self.listbox.GetSelection()
-        if selection < self.listbox.GetCount() - 1:
+        if selection < self.listbox.GetCount() - 1:  # Ensure not to go out of bounds
             self.listbox.SetSelection(selection + 1)
-            self.on_play(None)
+        else:
+            self.listbox.SetSelection(0)  # Loop back to the first item
+        print("Переход к следующему элементу")
+        self.on_play(None)
 
     def on_volume_up(self, event):
         print("Volume up")  # Debug print
@@ -256,3 +259,4 @@ class Tab1(wx.Panel):
 
     def on_refresh_listbox(self, event):
         self.populate_listbox()
+

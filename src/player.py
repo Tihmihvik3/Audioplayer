@@ -45,9 +45,9 @@ class AudioPlayer:
             current_time = math.floor(current_time * 10) / 10
             track_time = math.floor(self.track_length * 10) / 10
             print(track_time, current_time)
-            if current_time + 2 >= track_time:
+            if current_time + 3 >= track_time:
                 self.tab.on_next_track(None)
-            time.sleep(1)
+            time.sleep(0.5)
 
     def on_track_end(self):
         app = wx.GetApp()
