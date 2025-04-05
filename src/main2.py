@@ -14,10 +14,21 @@ class MyFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.notebook.tab1.listbox.SetFocus()
 
+        # Bind the close event to the on_close method
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
+    def on_close(self, event):
+        # Stop all processes and clear the player
+        for tab in [self.notebook.tab1, self.notebook.tab2, self.notebook.tab3]:
+            tab.player.stop()
+        self.Destroy()
+
 def create_window():
     app = wx.App(False)
     frame = MyFrame(None, title="TihonPlayer v1.1", size=(400, 400))
     frame.Show(True)
+
     app.MainLoop()
 
 create_window()
+

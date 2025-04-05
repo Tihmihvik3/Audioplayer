@@ -13,7 +13,7 @@ class Tab1(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
-        self.player = AudioPlayer()
+        self.player = AudioPlayer(self)  # Pass self as the tab argument
 
         # Initialize OnKeyPress class
         self.on_key_press = OnKeyPress(self)
@@ -256,4 +256,3 @@ class Tab1(wx.Panel):
 
     def on_refresh_listbox(self, event):
         self.populate_listbox()
-
